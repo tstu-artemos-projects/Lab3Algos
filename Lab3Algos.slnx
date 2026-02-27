@@ -1,3 +1,5 @@
 <Solution>
+  <Project Path="ArrayInversion.Tests/ArrayInversion.Tests.csproj" />
+  <Project Path="ArrayInversion/ArrayInversion.csproj" />
   <Project Path="Lab3Algos/Lab3Algos.csproj" />
 </Solution>
