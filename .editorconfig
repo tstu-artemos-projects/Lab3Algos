@@ -2,7 +2,7 @@ root = true
 
 [*]
 charset = utf-8
-end_of_line = lf
+end_of_line = crlf
 insert_final_newline = true
 trim_trailing_whitespace = true
 indent_style = space
@@ -23,8 +23,8 @@ dotnet_separate_import_directive_groups = false
 dotnet_sort_system_directives_first = true
 csharp_using_directive_placement = outside_namespace:silent
 
-csharp_style_var_for_built_in_types = true:silent   # Использовать var для встроенных типов
-csharp_style_var_when_type_is_apparent = true:silent # Использовать var, когда тип очевиден
+csharp_style_var_for_built_in_types = true:silent
+csharp_style_var_when_type_is_apparent = true:silent
 csharp_style_implicit_object_creation_when_type_is_apparent = true:suggestion
 
 dotnet_naming_rule.interfaces_should_be_prefixed_with_i.severity = suggestion
