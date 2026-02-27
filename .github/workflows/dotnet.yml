@@ -40,7 +40,7 @@ jobs:
 
     - name: Prepare Report Name
       shell: pwsh
-      run: Copy-Item "Reports/lab.docx" "./Отчет_${{ github.ref_name }}.docx"
+      run: Copy-Item "Reports/lab.docx" "./report-lab3-25.16-klochkov-algorithmization-and-programming.docx"
 
     - name: Test with coverage
       run: |
@@ -63,17 +63,17 @@ jobs:
     - name: Zip Artifacts
       shell: pwsh
       run: |
-        Compress-Archive -Path ./publish/* -DestinationPath ./lab3-windows-amd64.zip
-        Compress-Archive -Path ./html-report/* -DestinationPath ./code-coverage-report.zip
+        Compress-Archive -Path ./publish/* -DestinationPath ./lab3-25.16-klochkov-algorithmization-and-programming-windows-amd64.zip
+        Compress-Archive -Path ./html-report/* -DestinationPath ./code-coverage-report-lab3-25.16-klochkov-algorithmization-and-programming.zip
 
     - name: Create Tag Release
       if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@v2
       with:
         files: |
-          lab3-windows-amd64.zip
-          code-coverage-report.zip
-          ./Отчет_*.docx
+          lab3-25.16-klochkov-algorithmization-and-programming-windows-amd64.zip
+          code-coverage-report-lab3-25.16-klochkov-algorithmization-and-programming.zip
+          report-lab3-25.16-klochkov-algorithmization-and-programming.docx
         name: Release ${{ github.ref_name }}
         body: |
           Автоматический релиз версии ${{ github.ref_name }}
@@ -88,9 +88,9 @@ jobs:
       uses: softprops/action-gh-release@v2
       with:
         files: |
-          lab3-windows-amd64.zip
-          code-coverage-report.zip
-          ./Отчет_*.docx
+          lab3-25.16-klochkov-algorithmization-and-programming-windows-amd64.zip
+          code-coverage-report-lab3-25.16-klochkov-algorithmization-and-programming.zip
+          report-lab3-25.16-klochkov-algorithmization-and-programming.docx
         tag_name: latest
         name: Latest Build
         body: |
@@ -100,5 +100,6 @@ jobs:
         draft: false
         prerelease: false
         make_latest: true
+        overwrite: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
