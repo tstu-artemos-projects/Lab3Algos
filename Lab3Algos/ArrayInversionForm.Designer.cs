@@ -1,6 +1,6 @@
 ﻿namespace Lab3Algos
 {
-    partial class Form1
+    partial class ArrayInversionForm
     {
         /// <summary>
         ///  Required designer variable.

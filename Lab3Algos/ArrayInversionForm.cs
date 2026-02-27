@@ -1,8 +1,8 @@
 namespace Lab3Algos
 {
-    public partial class Form1 : Form
+    public partial class ArrayInversionForm : Form
     {
-        public Form1()
+        public ArrayInversionForm()
         {
             InitializeComponent();
         }
