@@ -1,0 +1,2 @@
+dotnet format
+dotnet test -c Release 

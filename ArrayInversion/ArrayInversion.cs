@@ -1,7 +1,5 @@
-﻿namespace ArrayInversion
-{
-    public class ArrayInversion
-    {
+namespace ArrayInversion {
+  public class ArrayInversion {
 
-    }
+  }
 }

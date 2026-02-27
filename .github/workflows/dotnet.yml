@@ -1,0 +1,103 @@
+name: .NET Core CI
+
+on:
+  push:
+    branches: [ "master", "main" ]
+    tags: [ "v*" ]
+  pull_request:
+    branches: [ "master", "main" ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    permissions:
+      contents: write
+      packages: write
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        lfs: true
+
+    - name: Checkout LFS objects
+      run: git lfs checkout
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 10.0.x
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Prettie Check
+      run: dotnet format --verify-no-changes
+
+    - name: Publish App
+      run: dotnet publish -c Release -o ./publish
+
+    - name: Prepare Report Name
+      shell: pwsh
+      run: Copy-Item "Reports/lab.docx" "./Отчет_${{ github.ref_name }}.docx"
+
+    - name: Test with coverage
+      run: |
+        dotnet test -c Release --no-build --collect:"XPlat Code Coverage" `
+        --results-directory ./coverage `
+        -- `
+        DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude="[*Test*]*,[xunit*]*,[*.Designer.cs]"
+
+    - name: Generate Coverage Reports
+      uses: danielpalme/ReportGenerator-GitHub-Action@5.2.4
+      with:
+        reports: 'coverage/**/*.xml'
+        targetdir: 'html-report'
+        reporttypes: 'HtmlInline_AzurePipelines;MarkdownSummary'
+
+    - name: Publish Coverage Summary  
+      shell: pwsh
+      run: Get-Content html-report/Summary.md | Add-Content $env:GITHUB_STEP_SUMMARY
+
+    - name: Zip Artifacts
+      shell: pwsh
+      run: |
+        Compress-Archive -Path ./publish/* -DestinationPath ./lab3-windows-amd64.zip
+        Compress-Archive -Path ./html-report/* -DestinationPath ./code-coverage-report.zip
+
+    - name: Create Tag Release
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: softprops/action-gh-release@v2
+      with:
+        files: |
+          lab3-windows-amd64.zip
+          code-coverage-report.zip
+          ./Отчет_*.docx
+        name: Release ${{ github.ref_name }}
+        body: |
+          Автоматический релиз версии ${{ github.ref_name }}
+          Все тесты пройдены успешно. Отчёт о покрытии приложен.
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Update Latest Release
+      if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
+      uses: softprops/action-gh-release@v2
+      with:
+        files: |
+          lab3-windows-amd64.zip
+          code-coverage-report.zip
+          ./Отчет_*.docx
+        tag_name: latest
+        name: Latest Build
+        body: |
+          Автоматическая сборка из ветки ${{ github.ref_name }}.
+          Дата обновления: ${{ github.event.head_commit.timestamp }}
+          Последний коммит: ${{ github.sha }}
+        draft: false
+        prerelease: false
+        make_latest: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

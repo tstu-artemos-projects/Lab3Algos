@@ -1,0 +1,22 @@
+{
+  "name": "lab3algos",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tstu-artemos-projects/Lab3Algos.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/tstu-artemos-projects/Lab3Algos/issues"
+  },
+  "homepage": "https://github.com/tstu-artemos-projects/Lab3Algos#readme"
+}
