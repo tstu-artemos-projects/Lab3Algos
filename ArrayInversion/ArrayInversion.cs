@@ -25,7 +25,7 @@ namespace ArrayInversion {
       long count = 0;
       for (int i = 0; i < array.Length - 1; i++) {
         for (int j = i + 1; j < array.Length; j++) {
-          ops++; // Операция сравнения [cite: 58]
+          ops++;
           if (array[i] > array[j]) count++;
         }
       }
@@ -44,9 +44,9 @@ namespace ArrayInversion {
     public static InversionResult Optimized(int[] array) {
       if (array == null) throw new ArgumentNullException(nameof(array));
 
-      int[] temp = new int[array.Length]; // Временный массив для слияния [cite: 52]
+      int[] temp = new int[array.Length];
       long ops = 0;
-      int[] workingCopy = (int[])array.Clone(); // Не меняем оригинал, если это важно
+      int[] workingCopy = (int[])array.Clone();
       long count = SortAndCount(workingCopy, temp, 0, array.Length - 1, ref ops);
       return new InversionResult { Count = count, Operations = ops };
     }
@@ -88,7 +88,7 @@ namespace ArrayInversion {
       int i = left, j = mid, k = left;
 
       while (i <= mid - 1 && j <= right) {
-        ops++; // Операция сравнения [cite: 58]
+        ops++;
         if (arr[i] <= arr[j]) {
           temp[k++] = arr[i++];
         }
@@ -98,19 +98,16 @@ namespace ArrayInversion {
         }
       }
 
-      // Копируем остатки левой половины
       while (i <= mid - 1) {
         temp[k++] = arr[i++];
-        ops++; // Операция пересылки
+        ops++;
       }
 
-      // Копируем остатки правой половины
       while (j <= right) {
         temp[k++] = arr[j++];
         ops++;
       }
 
-      // Возвращаем данные в исходный массив
       for (i = left; i <= right; i++) arr[i] = temp[i];
 
       return invCount;
