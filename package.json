@@ -2,9 +2,9 @@
   "name": "lab3algos",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "Lab3Algos/Program.cs",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "dotnet test",
     "prepare": "husky"
   },
   "repository": {
@@ -14,7 +14,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "dotnet",
   "bugs": {
     "url": "https://github.com/tstu-artemos-projects/Lab3Algos/issues"
   },
