@@ -32,7 +32,7 @@ namespace Lab3Algos {
         int[] data = Enumerable.Range(0, n).Select(_ => rnd.Next(-10000, 10000)).ToArray();
 
         int[] dataBF = (int[])data.Clone();
-        Stopwatch sw =  .StartNew();
+        Stopwatch sw = Stopwatch.StartNew();
         var resBF = ArrayInversion.ArrayInversion.BruteForce(dataBF);
         sw.Stop();
         double timeBF = sw.Elapsed.TotalMilliseconds;
